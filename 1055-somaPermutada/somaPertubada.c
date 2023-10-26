@@ -31,20 +31,20 @@ void quickSort(int vetor[], int p, int r) {
   }
 }
 
-/*Criar funcao que faça isso:
-somaEsq = soma;
-        somaDir = soma;
-
-        somaEsq += abs(vet[maior] - vet[menor-1]);
-        somaDir += abs(vet[maior] - vet[menor+1]);
-
-        soma = (somaEsq < somaDir) ? somaDir : somaEsq;
-*/
 int calculaMaiorValor(int vet[], int maior, int menor) {
     int somaEsq = 0, somaDir = 0;
 
     somaEsq += abs(vet[maior] - vet[menor-1]);
     somaDir += abs(vet[maior] - vet[menor+1]);
+
+    return (somaEsq < somaDir) ? somaDir : somaEsq;
+}
+
+int calculaMenorValor(int vet[], int maior, int menor) {
+    int somaEsq = 0, somaDir = 0;
+
+    somaEsq += abs(vet[menor] - vet[maior]);
+    somaDir += abs(vet[menor] - vet[maior+1]);
 
     return (somaEsq < somaDir) ? somaDir : somaEsq;
 }
@@ -62,34 +62,12 @@ void somaPertubada(int vet[], int maior, int caso) {
           break;
         }
 
-        /*somaEsq = soma;
-        somaDir = soma;
-
-        somaEsq += abs(vet[maior] - vet[menor-1]);
-        somaDir += abs(vet[maior] - vet[menor+1]);
-
-        soma = (somaEsq < somaDir) ? somaDir : somaEsq;*/
-
         soma += calculaMaiorValor(vet, maior, menor);
-
-        somaEsq = soma;
-        somaDir = soma;
-        
-        somaEsq += abs(vet[menor] - vet[maior]);
-        somaDir += abs(vet[menor] - vet[maior+1]);
-
-        soma = (somaEsq < somaDir) ? somaDir : somaEsq;
+        soma += calculaMenorValor(vet, maior, menor);
     }
 
-    if(menor == maior){
-      somaEsq = soma;
-      somaDir = soma;
-      
-      somaEsq += abs(vet[maior] - vet[menor-1]);
-      somaDir += abs(vet[maior] - vet[menor+1]);
-
-      soma = (somaEsq < somaDir) ? somaDir : somaEsq;
-    }
+    if(menor == maior)
+        soma += calculaMaiorValor(vet, maior, menor);
 
     printf("Case %d: %d\n", caso+1, soma);
 }
