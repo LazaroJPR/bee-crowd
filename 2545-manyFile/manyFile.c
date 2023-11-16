@@ -23,17 +23,18 @@ void bfs(Arquivo *arquivos, int *fila, int *grau, int nivel[], int qntdArquivos,
         (*resp) = (*resp) > nivel[v] ? (*resp) : nivel[v];
 
         for (int u = 0; u < arquivos[v].num_dependencias; u++) {
-            if (arquivos[v].dependencias[u]) {
-                grau[arquivos[v].dependencias[u]]--;
-
-                if (grau[arquivos[v].dependencias[u]] == 0) {
-                    fila[++(*fim)] = arquivos[v].dependencias[u];
-                    nivel[arquivos[v].dependencias[u]] = nivel[v] + 1;
+            int dependencia = arquivos[v].dependencias[u];
+            if (dependencia >= 0) {
+                grau[dependencia]--;
+                if (grau[dependencia] == 0) {
+                    fila[++(*fim)] = dependencia;
+                    nivel[dependencia] = nivel[v] + 1;
                 }
             }
-        }   
+        }
     }
 }
+
 
 int main() {
     int qntdArquivos, tempoTotal;
